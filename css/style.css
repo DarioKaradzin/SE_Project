@@ -36,8 +36,8 @@ nav .nav-links {
     display: flex;
     align-items: center; 
     gap: 24px;
-    white-space: nowrap; /* Prevent wrapping */
-    flex-wrap: nowrap; /* Ensure flex items stay in one line */
+    white-space: nowrap;
+    flex-wrap: nowrap;
 }
 
 nav .other-links,
@@ -45,8 +45,8 @@ nav .login-links {
     display: flex;
     align-items: center;
     gap: 24px;
-    margin: 0; /* Remove any default margins */
-    padding: 0; /* Remove any default padding */
+    margin: 0; 
+    padding: 0; 
 }
 
 .nav-link {
@@ -248,14 +248,23 @@ body.logged-in .logged-out { display: none; }
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition:0.3s ease;
+}
+
+.workout-modal-button:hover {
+    background: #555;
 }
 
 .workout-modal-button.primary {
-    background: #0582CA;
+    background: #003554;
     color: white;
+    transition: 0.3s ease;
 }
 
-/* Add to your create_workout.css */
+.workout-modal-button.primary:hover {
+    background: #006494;
+}
+
 .workouts-list {
     max-width: 600px;
     margin: 0 auto;
@@ -266,6 +275,8 @@ body.logged-in .logged-out { display: none; }
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     padding: 16px;
+    padding-left: 24px;
+    padding-right:24px;
     margin-bottom: 16px;
 }
 
@@ -273,12 +284,11 @@ body.logged-in .logged-out { display: none; }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
 }
 
 .workout-header h3 {
     color: #333;
-    margin-bottom: 8px;
+    margin-bottom:8px;
 }
 
 .workout-date {
@@ -308,12 +318,21 @@ body.logged-in .logged-out { display: none; }
     background: #003554;
     color: white;
     font-weight:normal;
+    transition: 0.3s ease;
 }
 
+.workout-actions .view-workout:hover {
+    background: #0582CA;
+}
 .workout-actions .delete-workout {
     background: #006494;
     color: white;
     font-weight:normal; 
+    transition: 0.3s ease;
+}
+
+.workout-actions .delete-workout:hover {
+    background: #4DA8DA;
 }
 
 .no-workouts {

@@ -19,7 +19,7 @@
     color: #006494;
 }
 
-/* Exercise Modal styles (matching Workout Modal look) */
+/* Exercise Modal styles */
 .exercise-modal {
     display: none;
     position: fixed;
@@ -65,11 +65,21 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.exercise-modal-button:hover {
+    background: #555;
 }
 
 .exercise-modal-button.primary {
-    background: #4CAF50;
+    background: #003554;
     color: white;
+    transition: 0.3s ease;
+}
+
+.exercise-modal-button.primary:hover {
+    background: #006494;
 }
 
 .exercise-data{
@@ -81,10 +91,20 @@
     background: #003554;
     color: white;
     font-weight:normal;
+    transition: 0.3s ease;
 }
 
 .workout-actions .delete-exercise {
     background: #006494;
     color: white;
     font-weight:normal;
+    transition: 0.3s ease;
+}
+
+.workout-actions .delete-exercise:hover {
+    background: #4DA8DA;
+}
+
+.workout-actions .edit-exercise:hover {
+    background: #0582CA;
 }
