@@ -183,6 +183,22 @@ function setupCreateWorkoutPage() {
     const exerciseCancel = document.getElementById('exerciseCancel');
     const exerciseTriggers = document.querySelectorAll('.exercise-container');
 
+    const exerciseEditForm = document.getElementById('exerciseEditForm');
+    const exerciseEditCancel = document.getElementById('exerciseEditCancel');
+
+        // Close edit modal
+    exerciseEditCancel.addEventListener('click', () => {
+        const exerciseEditModal = document.getElementById('exerciseEditModal');
+        exerciseEditModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        const exerciseEditModal = document.getElementById('exerciseEditModal');
+        if (e.target === exerciseEditModal) {
+            exerciseEditModal.style.display = 'none';
+        }
+    });
+
     if (!exerciseModal || !exerciseForm) {
         console.error('Required exercise elements not found!');
         return;
@@ -334,7 +350,12 @@ async function viewWorkoutDetails(workoutId) {
                 deleteExercise(exerciseId);
             });
         });
-
+            document.querySelectorAll('.edit-exercise').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const exerciseId = e.target.getAttribute('data-id');
+                    showEditExerciseModal(exerciseId);
+                });
+            });
     } catch (err) {
         console.error('Error loading exercises:', err);
         exercisesList.innerHTML = `<p class="error">${err.message}</p>`;
@@ -366,4 +387,90 @@ async function deleteExercise(exerciseId) {
         console.error('Delete error:', err);
         alert('Delete failed: ' + err.message);
     }
+}
+
+// handle multiple event listeners
+let exerciseEditSubmitHandler = null;
+
+async function showEditExerciseModal(exerciseId) {
+    const exerciseEditModal = document.getElementById('exerciseEditModal');
+    if (!exerciseEditModal) {
+        console.error('Edit exercise modal not found');
+        return;
+    }
+    exerciseEditModal.style.display = 'flex';
+    const formData = new FormData();
+    formData.append('exerciseId', exerciseId);
+
+    const result = await fetch('php/getExerciseByID.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    const data = await result.json();
+    console.log('Exercise data:', data);
+    
+    if (!data || !data.exercise) {
+        console.error('Exercise data not found');
+        alert('Failed to load exercise details');
+        return;
+    }
+    const exercise = data.exercise;
+    const exerciseEditName = document.getElementById('exerciseEditName');
+    const exerciseEditNotes = document.getElementById('exerciseEditNotes');
+    const exerciseEditCategory = document.getElementById('exerciseEditCategory');
+    const exerciseEditDuration = document.getElementById('exerciseEditDuration');
+
+    exerciseEditName.value = exercise.title || '';
+    exerciseEditNotes.value = exercise.notes || '';
+    exerciseEditCategory.value = exercise.category || '';
+    exerciseEditDuration.value = exercise.duration_min || '';
+
+    const exerciseEditForm = document.getElementById('exerciseEditForm');
+
+    if (exerciseEditSubmitHandler) {
+        exerciseEditForm.removeEventListener('submit', exerciseEditSubmitHandler);
+    }
+
+        
+    exerciseEditSubmitHandler = async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('exerciseEditName').value;
+        const notes = document.getElementById('exerciseEditNotes').value;
+        const category = document.getElementById('exerciseEditCategory').value;
+        const duration = document.getElementById('exerciseEditDuration').value;
+
+        const formData = new FormData();
+        formData.append('exerciseId', exerciseId);
+        formData.append('name', name);
+        formData.append('notes', notes);
+        formData.append('category', category);
+        formData.append('duration', duration);
+
+        try {
+            const response = await fetch('php/edit_exercise.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            if (result.status === 'success') {
+                alert(result.message);
+                exerciseEditModal.style.display = 'none';
+                if (window.currentWorkoutId) {
+                    await viewWorkoutDetails(window.currentWorkoutId);
+                }
+            } else {
+                alert(result.error || 'Error updating exercise');
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error updating exercise.");
+        }
+    };
+        
+    // Add the new handler
+    exerciseEditForm.addEventListener('submit', exerciseEditSubmitHandler);
+    
 }

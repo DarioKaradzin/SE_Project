@@ -11,7 +11,6 @@
         </div>
 </div> 
 
-    <!-- Add this modal code anywhere in your page -->
 <div class="exercise-modal" id="exerciseModal">
     <div class="exercise-modal-content">
         <h3>Create Exercise</h3>
@@ -35,6 +34,35 @@
             <div class="exercise-modal-actions">
                 <button type="button" class="exercise-modal-button" id="exerciseCancel">Cancel</button>
                 <button type="submit" class="exercise-modal-button primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="exercise-modal" id="exerciseEditModal">
+    <div class="exercise-modal-content">
+        <h3>Edit Exercise</h3>
+        <form id="exerciseEditForm">
+            <input type="text" class="exercise-modal-input" id="exerciseEditName" placeholder="Exercise Name" required>
+            
+            <textarea class="exercise-modal-input" id="exerciseEditNotes" placeholder="Notes (optional)" rows="4"></textarea>
+            
+            <select class="exercise-modal-input" id="exerciseEditCategory" required>
+                <option value="" disabled selected>Select Category</option>
+                <option value="cardio">Cardio</option>
+                <option value="strength-training">Strength</option>
+                <option value="functional-training">functional-training</option>
+                <option value="flexibility">Flexibility</option>
+                <option value="calisthetics">Calisthetics</option>
+            </select>
+
+            <input type="number" class="exercise-modal-input" id="exerciseEditDuration" placeholder="Duration (minutes)" min="1" required>
+
+
+            <div class="exercise-modal-actions">
+                <button type="button" class="exercise-modal-button" id="exerciseEditCancel">Cancel</button>
+                <button type="submit" class="exercise-modal-button primary">Save</button>
             </div>
         </form>
     </div>
