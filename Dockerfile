@@ -1,27 +1,18 @@
 FROM php:8.0-apache
 WORKDIR /
 
-
+# Copy files to root (not recommended)
 COPY . .
 
+# Install extensions
+RUN apt update && apt install -y zip libzip-dev && docker-php-ext-install pdo_mysql zip
 
-# Common extensions
-RUN apt update
-RUN apt install zip libzip-dev -y
-RUN docker-php-ext-install pdo_mysql zip
+# Override Apache's default directory
+ENV APACHE_DOCUMENT_ROOT /
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 
-
-# Enable mod_rewrite for images with apache
-RUN if command -v a2enmod >/dev/null 2>&1; then \
-       a2enmod rewrite headers \
-   ;fi
-
-
-# Composer install
+# Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-COPY composer.json composer.json
 RUN composer install --no-dev
 
-
 EXPOSE 80
-EXPOSE 443
