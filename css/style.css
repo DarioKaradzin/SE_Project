@@ -344,3 +344,21 @@ body.logged-in .logged-out { display: none; }
     color: #666;
     padding: 24px;
 }
+
+.goals-container {
+    display:flex;
+    flex-direction: column;
+    background: #4DA8DA;
+    margin: 24px auto;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.goal-item {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+}

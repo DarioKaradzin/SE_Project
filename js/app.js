@@ -116,6 +116,7 @@ function updateRegisterButtons(){
                 <span><span class="welcome_text">Welcome, </span>${data.username}</span>
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#workout_list" class="nav-link">Workouts</a>
+                <a href="#goals" class="nav-link">Goals</a>
             `;
 
             displayLinks.innerHTML = `

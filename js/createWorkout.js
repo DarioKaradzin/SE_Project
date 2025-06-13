@@ -398,7 +398,6 @@ async function showEditExerciseModal(exerciseId) {
         console.error('Edit exercise modal not found');
         return;
     }
-    exerciseEditModal.style.display = 'flex';
     const formData = new FormData();
     formData.append('exerciseId', exerciseId);
 
@@ -473,4 +472,6 @@ async function showEditExerciseModal(exerciseId) {
     // Add the new handler
     exerciseEditForm.addEventListener('submit', exerciseEditSubmitHandler);
     
+    exerciseEditModal.style.display = 'flex';
+
 }
